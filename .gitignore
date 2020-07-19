@@ -31,3 +31,5 @@ Makefile.in
 /missing
 /stamp-h1
 *.in~
+
+Session.vim
