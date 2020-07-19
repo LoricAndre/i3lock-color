@@ -99,7 +99,7 @@ bool show_clock = false;
 bool slideshow_enabled = false;
 bool always_show_clock = false;
 bool show_indicator = false;
-float refresh_rate = 1.0;
+float refresh_rate = 0;
 
 /* there's some issues with compositing - upstream removed support for this, but we'll allow people to supply an arg to enable it */
 bool composite = false;
@@ -123,12 +123,12 @@ int greeter_align = 0;
 char time_format[64] = "%H:%M:%S\0";
 char date_format[64] = "%A, %m %Y\0";
 
-char verif_font[64] = "sans-serif\0";
-char wrong_font[64] = "sans-serif\0";
-char layout_font[64] = "sans-serif\0";
-char time_font[64] = "sans-serif\0";
-char date_font[64] = "sans-serif\0";
-char greeter_font[64] = "sans-serif\0";
+char verif_font[64] = "SauceCodePro Nerd Font Mono\0";
+char wrong_font[64] = "SauceCodePro Nerd Font Mono\0";
+char layout_font[64] = "SauceCodePro Nerd Font Mono\0";
+char time_font[64] = "SauceCodePro Nerd Font Mono\0";
+char date_font[64] = "SauceCodePro Nerd Font Mono\0";
+char greeter_font[64] = "SauceCodePro Nerd Font Mono\0";
 
 char* fonts[6] = {
     verif_font,

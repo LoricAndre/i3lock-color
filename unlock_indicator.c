@@ -807,15 +807,6 @@ void render_lock(uint32_t *resolution, xcb_drawable_t drawable) {
         draw_data.keylayout_text.align = layout_align;
     }
 
-    if (greeter_text) {
-        draw_data.greeter_text.show = true;
-        strncpy(draw_data.greeter_text.str, greeter_text, sizeof(draw_data.greeter_text.str) - 1);
-        draw_data.greeter_text.size = greeter_size;
-        draw_data.greeter_text.font = get_font_face(GREETER_FONT);
-        draw_data.greeter_text.color = greeter16;
-        draw_data.greeter_text.align = greeter_align;
-    }
-
     if (show_clock && (!draw_data.status_text.show || always_show_clock)) {
         time_t rawtime;
         struct tm *timeinfo;
@@ -838,6 +829,22 @@ void render_lock(uint32_t *resolution, xcb_drawable_t drawable) {
             draw_data.date_text.font = get_font_face(DATE_FONT);
             draw_data.date_text.align = date_align;
         }
+        /* Get battery status as greeter text */
+        char battery_text[32];
+        FILE* battery_file = fopen("/sys/class/power_supply/BAT0/capacity", "r");
+        if (battery_file == NULL) {
+            strncpy(battery_text, (char*) "No Battery\0", sizeof(battery_text) - 1);
+        } else {
+            char battery_capacity[4];
+            fscanf(battery_file, "%s", battery_capacity);
+            snprintf(battery_text, sizeof(battery_text), " %s%%\0", battery_capacity);
+        }
+        draw_data.greeter_text.show = true;
+        strncpy(draw_data.greeter_text.str, battery_text, sizeof(draw_data.greeter_text.str) - 1);
+        draw_data.greeter_text.size = greeter_size;
+        draw_data.greeter_text.font = get_font_face(GREETER_FONT);
+        draw_data.greeter_text.color = greeter16;
+        draw_data.greeter_text.align = greeter_align;
 
         if (*draw_data.greeter_text.str) {
             draw_data.greeter_text.show = true;
